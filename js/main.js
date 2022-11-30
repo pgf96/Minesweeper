@@ -5,6 +5,11 @@ let startingBombs = 10;
 const bombPosition = [];
 const bombs = [];
 
+const bombs2 = [
+  [0, 1],
+  [0, 2],
+];
+
 function createGrid() {
   for (let i = 0; i < gridSize; i++) {
     let row = [];
@@ -25,7 +30,15 @@ createGrid();
 
 function addBombs() {
   for (let i = 0; i < 10; i++) {
-    bombs.push([...Array(2)].map((e) => ~~(Math.random() * 10)));
+    let value = [...Array(2)].map((e) => ~~(Math.random() * 10));
+    console.log(value);
+    //accounts for duplicates
+    if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
+      console.log("duplicate");
+      i--;
+      continue;
+    }
+    bombs.push(value);
   }
 
   bombs.forEach((bomb) => {
@@ -34,6 +47,7 @@ function addBombs() {
     square.bombStatus = true;
   });
 }
+
 function squareClicked() {
   //or event.targetSelector
   let square = this;

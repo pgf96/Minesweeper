@@ -26,6 +26,7 @@ body {
 }
 
 div#grid div.bomb {
+    transition: 1.5s;
     color: black;
     background-color: red;
     font-size: small;

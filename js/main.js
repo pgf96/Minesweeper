@@ -144,9 +144,11 @@ function squareClicked() {
 
     if (bombCount > 0) {
       sq.style.backgroundColor = "green";
+      console.log(bombCount);
     } else if (bombCount == 0) {
       sq.style.backgroundColor = "yellow";
     }
+    return bombCount;
   }
 
   function areYaWinningSon(grid) {
@@ -168,22 +170,15 @@ function squareClicked() {
           c < 0 ||
           c >= gridSize ||
           grid[r][c].isBomb ||
-          grid[r][c].revealed
+          grid[r][c].revealed ||
+          adjacentBombsCount(grid[r][c]) > 0
         ) {
           // console.log(JSON.parse(JSON.stringify([r, c])));
-          // console.log("out of bonds, revealed already, or bomb");
+          // console.log("out of bounds, revealed already, has adjacent bombs, or bomb");
           continue;
         }
 
-        adjacentBombsCount(grid[r][c]);
-
-        if (grid[r][c].bombCount > 0) {
-          grid[r][c].innerHTML = grid[r][c].bombCount;
-          grid[r][c].revealed = true;
-          grid[r][c].style.backgroundColor = "green";
-          // console.log("number - dont add to queue");
-          continue;
-        }
+        // if (adjacentBombsCount(grid[r][c]) > 0) continue;
 
         queue.push(grid[r][c].position);
         // console.log("here is new queue");

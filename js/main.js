@@ -25,22 +25,22 @@ const testBombs = [
   [8, 6],
   [10, 7],
   [8, 9],
-  [8, 13],
-  [13, 5],
-  [13, 12],
-  [3, 5],
-  [13, 6],
-  [13, 7],
-  [2, 9],
-  [2, 13],
-  [13, 13],
-  [13, 1],
-  [3, 4],
-  [13, 4],
-  [13, 2],
-  [12, 1],
-  [7, 5],
-  [13, 7],
+  // [8, 13],
+  // [13, 5],
+  // [13, 12],
+  // [3, 5],
+  // [13, 6],
+  // [13, 7],
+  // [2, 9],
+  // [2, 13],
+  // [13, 13],
+  // [13, 1],
+  // [3, 4],
+  // [13, 4],
+  // [13, 2],
+  // [12, 1],
+  // [7, 5],
+  // [13, 7],
 ];
 
 const directions = [
@@ -102,6 +102,14 @@ function addBombs() {
   });
 }
 
+function checkWin() {
+  grid.forEach((row) => {
+    row.forEach((col) => {
+      console.log(grid[row][col]);
+    });
+  });
+}
+
 function revealAllBombs() {
   // bombs.forEach((bombs) => {
   // testBombs.forEach((bomb) => {
@@ -139,75 +147,75 @@ function squareClicked() {
       bfs(grid, x, y);
     }
   }
+}
 
-  function adjacentBombsCount(sq) {
-    // JSON.stringify(console.log(`square: ${sq}`));
-    let x = sq.position[0];
-    let y = sq.position[1];
-    // JSON.stringify(console.log(`here is: ${[x, y]}`));
-    let bombCount = 0;
+function adjacentBombsCount(sq) {
+  // JSON.stringify(console.log(`square: ${sq}`));
+  let x = sq.position[0];
+  let y = sq.position[1];
+  // JSON.stringify(console.log(`here is: ${[x, y]}`));
+  let bombCount = 0;
+  for (let dir of directions) {
+    let r = x + dir[0];
+    let c = y + dir[1];
+    if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) {
+      continue;
+    }
+    if (grid[r][c].isBomb) bombCount = bombCount + 1;
+  }
+
+  // JSON.stringify(console.log(`bombcount: ${bombCount}`));
+  sq.innerHTML = bombCount;
+  sq.bombCount = bombCount;
+  sq.revealed = true;
+
+  if (bombCount > 0) {
+    sq.style.backgroundColor = "green";
+    console.log(bombCount);
+  } else if (bombCount == 0) {
+    sq.style.backgroundColor = "yellow";
+  }
+  return bombCount;
+}
+
+function areYaWinningSon(grid) {
+  //all squares that arent bombs are revealed
+}
+
+function bfs(grid, x, y) {
+  const queue = [];
+
+  queue.push([x, y]);
+
+  while (queue.length > 0 && loop > 0) {
     for (let dir of directions) {
-      let r = x + dir[0];
-      let c = y + dir[1];
-      if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) {
+      let r = queue[0][0] + dir[0];
+      let c = queue[0][1] + dir[1];
+      if (
+        r < 0 ||
+        r >= gridSize ||
+        c < 0 ||
+        c >= gridSize ||
+        grid[r][c].isBomb ||
+        grid[r][c].revealed ||
+        adjacentBombsCount(grid[r][c]) > 0
+      ) {
+        // console.log(JSON.parse(JSON.stringify([r, c])));
+        // console.log("out of bounds, revealed already, has adjacent bombs, or bomb");
         continue;
       }
-      if (grid[r][c].isBomb) bombCount = bombCount + 1;
-    }
 
-    // JSON.stringify(console.log(`bombcount: ${bombCount}`));
-    sq.innerHTML = bombCount;
-    sq.bombCount = bombCount;
-    sq.revealed = true;
+      // if (adjacentBombsCount(grid[r][c]) > 0) continue;
 
-    if (bombCount > 0) {
-      sq.style.backgroundColor = "green";
-      console.log(bombCount);
-    } else if (bombCount == 0) {
-      sq.style.backgroundColor = "yellow";
-    }
-    return bombCount;
-  }
-
-  function areYaWinningSon(grid) {
-    //all squares that arent bombs are revealed
-  }
-
-  function bfs(grid, x, y) {
-    const queue = [];
-
-    queue.push([x, y]);
-
-    while (queue.length > 0 && loop > 0) {
-      for (let dir of directions) {
-        let r = queue[0][0] + dir[0];
-        let c = queue[0][1] + dir[1];
-        if (
-          r < 0 ||
-          r >= gridSize ||
-          c < 0 ||
-          c >= gridSize ||
-          grid[r][c].isBomb ||
-          grid[r][c].revealed ||
-          adjacentBombsCount(grid[r][c]) > 0
-        ) {
-          // console.log(JSON.parse(JSON.stringify([r, c])));
-          // console.log("out of bounds, revealed already, has adjacent bombs, or bomb");
-          continue;
-        }
-
-        // if (adjacentBombsCount(grid[r][c]) > 0) continue;
-
-        queue.push(grid[r][c].position);
-        // console.log("here is new queue");
-        // console.log(JSON.parse(JSON.stringify(queue)));
-      }
-      queue.shift();
-      // console.log("shift");
+      queue.push(grid[r][c].position);
+      // console.log("here is new queue");
       // console.log(JSON.parse(JSON.stringify(queue)));
-
-      //precaution for infinite loop - take out
-      loop = loop - 1;
     }
+    queue.shift();
+    // console.log("shift");
+    // console.log(JSON.parse(JSON.stringify(queue)));
+
+    //precaution for infinite loop - take out
+    loop = loop - 1;
   }
 }

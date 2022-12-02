@@ -13,18 +13,18 @@ const testBombs = [
   [2, 0],
   [1, 6],
   [1, 10],
-  [3, 1],
-  [9, 10],
-  [4, 10],
-  [8, 10],
-  [0, 2],
-  [8, 1],
-  [6, 1],
-  [6, 12],
-  [8, 5],
-  [8, 6],
-  [10, 7],
-  [8, 9],
+  // [3, 1],
+  // [9, 10],
+  // [4, 10],
+  // [8, 10],
+  // [0, 2],
+  // [8, 1],
+  // [6, 1],
+  // [6, 12],
+  // [8, 5],
+  // [8, 6],
+  // [10, 7],
+  // [8, 9],
   // [8, 13],
   // [13, 5],
   // [13, 12],
@@ -102,14 +102,6 @@ function addBombs() {
   });
 }
 
-function checkWin() {
-  grid.forEach((row) => {
-    row.forEach((col) => {
-      console.log(grid[row][col]);
-    });
-  });
-}
-
 function revealAllBombs() {
   // bombs.forEach((bombs) => {
   // testBombs.forEach((bomb) => {
@@ -124,6 +116,10 @@ function revealAllBombs() {
 
 function disableClick() {
   document.getElementById("grid").classList.add("disable");
+}
+
+function tempEnableClick() {
+  document.getElementById("grid").classList.remove("disable");
 }
 
 function squareClicked() {
@@ -147,6 +143,29 @@ function squareClicked() {
       bfs(grid, x, y);
     }
   }
+  console.log(checkWin());
+  if (checkWin() === true) {
+    console.log("you win");
+  }
+}
+
+// function checkWin() {
+//   const isRevealed = (x) => x.revealed == true || x.isBomb == true;
+
+//   return grid.every((row) => {
+//     console.log(row.every(isRevealed));
+//     row.every(isRevealed);
+//   });
+// }
+
+function checkWin() {
+  return grid.every((row) =>
+    row.every(
+      (square) =>
+        square.revealed === true ||
+        (square.isBomb === true && square.revealed === false)
+    )
+  );
 }
 
 function adjacentBombsCount(sq) {

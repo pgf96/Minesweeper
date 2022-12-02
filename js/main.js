@@ -96,9 +96,18 @@ function addBombs() {
 
   testBombs.forEach((bomb) => {
     square = grid[bomb[0]][bomb[1]];
-    square.innerHTML = "bomb";
+    // square.innerHTML = "bomb";
     square.isBomb = true;
-    square.classList.add("bomb");
+    // square.classList.add("bomb");
+  });
+}
+
+function revealAllBombs() {
+  // bombs.forEach((bombs) => {
+  testBombs.forEach((bomb) => {
+    let bombSquare = grid[bomb[0]][bomb[1]];
+    bombSquare.innerHTML = "bomb";
+    bombSquare.classList.add("bomb");
   });
 }
 
@@ -187,6 +196,8 @@ function squareClicked() {
       queue.shift();
       // console.log("shift");
       // console.log(JSON.parse(JSON.stringify(queue)));
+
+      //precaution for infinite loop - take out
       loop = loop - 1;
     }
   }

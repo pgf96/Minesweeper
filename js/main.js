@@ -122,6 +122,7 @@ function squareClicked() {
 
   //check if bomb
   if (square.isBomb) {
+    revealAllBombs();
     console.log("you lose");
   } else if (square.revealed == false || square.bombCount == "") {
     adjacentBombsCount(square);

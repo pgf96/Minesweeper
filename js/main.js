@@ -106,7 +106,7 @@ function squareClicked() {
   //or event.targetSelector
   // square is the element clicked
   let square = this;
-  console.log(square.position);
+  // console.log(square.position);
   // x,y coordinate of square clicked
   let x = square.position[0];
   let y = square.position[1];
@@ -123,10 +123,10 @@ function squareClicked() {
   }
 
   function adjacentBombsCount(sq) {
-    JSON.stringify(console.log(`square: ${sq}`));
+    // JSON.stringify(console.log(`square: ${sq}`));
     let x = sq.position[0];
     let y = sq.position[1];
-    JSON.stringify(console.log(`here is: ${[x, y]}`));
+    // JSON.stringify(console.log(`here is: ${[x, y]}`));
     let bombCount = 0;
     for (let dir of directions) {
       let r = x + dir[0];
@@ -136,29 +136,17 @@ function squareClicked() {
       }
       if (grid[r][c].isBomb) bombCount = bombCount + 1;
     }
+
+    // JSON.stringify(console.log(`bombcount: ${bombCount}`));
+    sq.innerHTML = bombCount;
+    sq.bombCount = bombCount;
+    sq.revealed = true;
+
     if (bombCount > 0) {
-      JSON.stringify(console.log(`bombcount: ${bombCount}`));
-      sq.innerHTML = bombCount;
-      sq.bombCount = bombCount;
-      sq.revealed = true;
       sq.style.backgroundColor = "green";
     } else if (bombCount == 0) {
-      sq.innerHTML = bombCount;
-      sq.bombCount = bombCount;
-      sq.revealed = true;
       sq.style.backgroundColor = "yellow";
     }
-
-    //   // console.log("bfs ran");
-    //   // bfs(grid, x, y);
-    // }
-
-    //if bomb count = 0 function bfs
-    // return bombCount;
-  }
-
-  function reveal(sq) {
-    //s.inner
   }
 
   function areYaWinningSon(grid) {
@@ -169,8 +157,6 @@ function squareClicked() {
     const queue = [];
 
     queue.push([x, y]);
-    console.log("here is queue");
-    console.log(queue);
 
     while (queue.length > 0 && loop > 0) {
       for (let dir of directions) {
@@ -184,8 +170,8 @@ function squareClicked() {
           grid[r][c].isBomb ||
           grid[r][c].revealed
         ) {
-          console.log(JSON.parse(JSON.stringify([r, c])));
-          console.log("out of bonds, revealed already, or bomb");
+          // console.log(JSON.parse(JSON.stringify([r, c])));
+          // console.log("out of bonds, revealed already, or bomb");
           continue;
         }
 
@@ -195,19 +181,17 @@ function squareClicked() {
           grid[r][c].innerHTML = grid[r][c].bombCount;
           grid[r][c].revealed = true;
           grid[r][c].style.backgroundColor = "green";
-          console.log("number - dont add to queue");
+          // console.log("number - dont add to queue");
           continue;
         }
 
         queue.push(grid[r][c].position);
-        console.log("here is new queue");
-        console.log(JSON.parse(JSON.stringify(queue)));
-        grid[r][c].revealed = true;
-        grid[r][c].style.backgroundColor = "aqua";
+        // console.log("here is new queue");
+        // console.log(JSON.parse(JSON.stringify(queue)));
       }
       queue.shift();
-      console.log("shift");
-      console.log(JSON.parse(JSON.stringify(queue)));
+      // console.log("shift");
+      // console.log(JSON.parse(JSON.stringify(queue)));
       loop = loop - 1;
     }
   }

@@ -114,6 +114,10 @@ function revealAllBombs() {
   });
 }
 
+function disableClick() {
+  document.getElementById("grid").classList.add("disable");
+}
+
 function squareClicked() {
   //or event.targetSelector
   // square is the element clicked
@@ -127,6 +131,7 @@ function squareClicked() {
   if (square.isBomb) {
     revealAllBombs();
     console.log("you lose");
+    disableClick();
   } else if (square.revealed == false || square.bombCount == "") {
     adjacentBombsCount(square);
 

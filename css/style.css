@@ -33,4 +33,7 @@ div#grid div.bomb {
 
 }
 
+div#grid.disable {
+    pointer-events: none;
+}
 

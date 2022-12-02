@@ -1,42 +1,47 @@
 //gridsize == # of mines
 const gridSize = 15;
 const grid = [];
-let startingBombs = 30;
+let startingBombs = 40;
 const bombPosition = [];
 const bombs = [];
 
-// const testBombs = [
-//   [1, 3],
-//   [2, 4],
-//   [2, 0],
-//   [9, 10],
-//   [4, 10],
-//   [8, 10],
-//   [0, 1],
-//   [8, 1],
-//   [6, 1],
-//   [6, 12],
-//   [8, 5],
-//   [8, 6],
-//   [10, 7],
-//   [8, 9],
-//   [8, 13],
-//   [13, 5],
-//   [13, 12],
-//   [3, 5],
-//   [13, 6],
-//   [13, 7],
-//   [2, 9],
-//   [2, 13],
-//   [13, 13],
-//   [13, 1],
-//   [3, 4],
-//   [13, 4],
-//   [13, 2],
-//   [12, 1],
-//   [7, 5],
-//   [13, 7],
-// ];
+//limiter
+let loop = 200;
+
+const testBombs = [
+  [1, 3],
+  [2, 0],
+  [1, 6],
+  [1, 10],
+  [3, 1],
+  [9, 10],
+  [4, 10],
+  [8, 10],
+  [0, 2],
+  [8, 1],
+  [6, 1],
+  [6, 12],
+  [8, 5],
+  [8, 6],
+  [10, 7],
+  [8, 9],
+  [8, 13],
+  [13, 5],
+  [13, 12],
+  [3, 5],
+  [13, 6],
+  [13, 7],
+  [2, 9],
+  [2, 13],
+  [13, 13],
+  [13, 1],
+  [3, 4],
+  [13, 4],
+  [13, 2],
+  [12, 1],
+  [7, 5],
+  [13, 7],
+];
 
 const directions = [
   [-1, -1],
@@ -48,8 +53,6 @@ const directions = [
   [1, -1],
   [0, -1],
 ];
-
-let loop = 100;
 
 function createGrid() {
   for (let i = 0; i < gridSize; i++) {
@@ -72,29 +75,31 @@ function createGrid() {
 createGrid();
 
 function addBombs() {
-  for (let i = 0; i < startingBombs; i++) {
-    let value = [...Array(2)].map((e) => ~~(Math.random() * 15));
-    //accounts for duplicates
-    if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
-      i--;
-      continue;
-    }
-    bombs.push(value);
-  }
+  // for (let i = 0; i < startingBombs; i++) {
+  //   let value = [...Array(2)].map(() => Math.floor(Math.random() * 15));
+  //   //accounts for duplicates
+  //   if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
+  //     i--;
+  //     continue;
+  //   }
+  //   console.log(value);
+  //   bombs.push(value);
+  // }
+  // console.log(bombs);
 
-  bombs.forEach((bomb) => {
-    square = grid[bomb[0]][bomb[1]];
-    square.innerHTML = "bomb";
-    square.isBomb = true;
-    square.classList.add("bomb");
-  });
-
-  // testBombs.forEach((bomb) => {
+  // bombs.forEach((bomb) => {
   //   square = grid[bomb[0]][bomb[1]];
   //   square.innerHTML = "bomb";
   //   square.isBomb = true;
   //   square.classList.add("bomb");
   // });
+
+  testBombs.forEach((bomb) => {
+    square = grid[bomb[0]][bomb[1]];
+    square.innerHTML = "bomb";
+    square.isBomb = true;
+    square.classList.add("bomb");
+  });
 }
 
 function squareClicked() {
@@ -102,7 +107,7 @@ function squareClicked() {
   // square is the element clicked
   let square = this;
   console.log(square.position);
-  // x,y coordinate of square clicke
+  // x,y coordinate of square clicked
   let x = square.position[0];
   let y = square.position[1];
 
@@ -118,9 +123,10 @@ function squareClicked() {
   }
 
   function adjacentBombsCount(sq) {
-    console.log(sq);
+    JSON.stringify(console.log(`square: ${sq}`));
     let x = sq.position[0];
     let y = sq.position[1];
+    JSON.stringify(console.log(`here is: ${[x, y]}`));
     let bombCount = 0;
     for (let dir of directions) {
       let r = x + dir[0];
@@ -141,10 +147,11 @@ function squareClicked() {
       sq.bombCount = bombCount;
       sq.revealed = true;
       sq.style.backgroundColor = "yellow";
-
-      // console.log("bfs ran");
-      // bfs(grid, x, y);
     }
+
+    //   // console.log("bfs ran");
+    //   // bfs(grid, x, y);
+    // }
 
     //if bomb count = 0 function bfs
     // return bombCount;
@@ -152,6 +159,10 @@ function squareClicked() {
 
   function reveal(sq) {
     //s.inner
+  }
+
+  function areYaWinningSon(grid) {
+    //all squares that arent bombs are revealed
   }
 
   function bfs(grid, x, y) {
@@ -174,7 +185,7 @@ function squareClicked() {
           grid[r][c].revealed
         ) {
           console.log(JSON.parse(JSON.stringify([r, c])));
-          console.log("trigger");
+          console.log("out of bonds, revealed already, or bomb");
           continue;
         }
 
@@ -184,12 +195,9 @@ function squareClicked() {
           grid[r][c].innerHTML = grid[r][c].bombCount;
           grid[r][c].revealed = true;
           grid[r][c].style.backgroundColor = "green";
-          console.log("second trigger");
+          console.log("number - dont add to queue");
           continue;
         }
-
-        let [_queue] = queue;
-        if (_queue.includes(grid[r][c].position)) continue;
 
         queue.push(grid[r][c].position);
         console.log("here is new queue");

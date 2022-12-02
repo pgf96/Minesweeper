@@ -104,10 +104,13 @@ function addBombs() {
 
 function revealAllBombs() {
   // bombs.forEach((bombs) => {
-  testBombs.forEach((bomb) => {
-    let bombSquare = grid[bomb[0]][bomb[1]];
-    bombSquare.innerHTML = "bomb";
-    bombSquare.classList.add("bomb");
+  // testBombs.forEach((bomb) => {
+  testBombs.forEach(function (bomb, index) {
+    setTimeout(function () {
+      let bombSquare = grid[bomb[0]][bomb[1]];
+      bombSquare.innerHTML = "bomb";
+      bombSquare.classList.add("bomb");
+    }, 75 * (index + 0));
   });
 }
 

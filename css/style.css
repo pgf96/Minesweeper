@@ -17,6 +17,11 @@ body {
     flex-wrap: wrap;
 }
 
+div {
+    display: flex; 
+    align-items: center;
+}
+
 #grid div {
     width: 37.8px;
     height: 37.5px;

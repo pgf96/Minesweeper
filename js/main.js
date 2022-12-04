@@ -1,46 +1,47 @@
 //gridsize == # of mines
-const gridSize = 15;
-const grid = [];
+let gridSize = 15;
+let grid = [];
+let bombPosition = [];
+let bombs = [];
+
 let startingBombs = 40;
-const bombPosition = [];
-const bombs = [];
 
 //limiter
-let loop = 200;
+// let loop = 200;
 
 const testBombs = [
   [1, 3],
   [2, 0],
   [1, 6],
   [1, 10],
-  // [3, 1],
-  // [9, 10],
-  // [4, 10],
-  // [8, 10],
-  // [0, 2],
-  // [8, 1],
-  // [6, 1],
-  // [6, 12],
-  // [8, 5],
-  // [8, 6],
-  // [10, 7],
-  // [8, 9],
-  // [8, 13],
-  // [13, 5],
-  // [13, 12],
-  // [3, 5],
-  // [13, 6],
-  // [13, 7],
-  // [2, 9],
-  // [2, 13],
-  // [13, 13],
-  // [13, 1],
-  // [3, 4],
-  // [13, 4],
-  // [13, 2],
-  // [12, 1],
-  // [7, 5],
-  // [13, 7],
+  [3, 1],
+  [9, 10],
+  [4, 10],
+  [8, 10],
+  [0, 2],
+  [8, 1],
+  [6, 1],
+  [6, 12],
+  [8, 5],
+  [8, 6],
+  [10, 7],
+  [8, 9],
+  [8, 13],
+  [13, 5],
+  [13, 12],
+  [3, 5],
+  [13, 6],
+  [13, 7],
+  [2, 9],
+  [2, 13],
+  [13, 13],
+  [13, 1],
+  [3, 4],
+  [13, 4],
+  [13, 2],
+  [12, 1],
+  [7, 5],
+  [13, 7],
 ];
 
 const directions = [
@@ -54,6 +55,19 @@ const directions = [
   [0, -1],
 ];
 
+// cached element references
+let gridEl = document.getElementById("grid");
+
+function restart() {
+  grid = [];
+  bombPosition = [];
+  gridEl.classList.remove("disable");
+  while (gridEl.firstChild) {
+    gridEl.removeChild(gridEl.firstChild);
+  }
+  createGrid();
+}
+
 function createGrid() {
   for (let i = 0; i < gridSize; i++) {
     let row = [];
@@ -64,7 +78,7 @@ function createGrid() {
       sqEl.bombCount = "";
       sqEl.revealed = false;
       sqEl.addEventListener("click", squareClicked);
-      document.getElementById("grid").append(sqEl);
+      gridEl.append(sqEl);
       row.push(sqEl);
     }
     grid.push(row);
@@ -115,11 +129,11 @@ function revealAllBombs() {
 }
 
 function disableClick() {
-  document.getElementById("grid").classList.add("disable");
+  gridEl.classList.add("disable");
 }
 
 function tempEnableClick() {
-  document.getElementById("grid").classList.remove("disable");
+  gridEl.classList.remove("disable");
 }
 
 function squareClicked() {
@@ -133,6 +147,7 @@ function squareClicked() {
 
   //check if bomb
   if (square.isBomb) {
+    //loss condition
     revealAllBombs();
     console.log("you lose");
     disableClick();
@@ -144,19 +159,11 @@ function squareClicked() {
     }
   }
   console.log(checkWin());
-  if (checkWin() === true) {
+  if (checkWin() == true) {
+    disableClick();
     console.log("you win");
   }
 }
-
-// function checkWin() {
-//   const isRevealed = (x) => x.revealed == true || x.isBomb == true;
-
-//   return grid.every((row) => {
-//     console.log(row.every(isRevealed));
-//     row.every(isRevealed);
-//   });
-// }
 
 function checkWin() {
   return grid.every((row) =>
@@ -197,16 +204,13 @@ function adjacentBombsCount(sq) {
   return bombCount;
 }
 
-function areYaWinningSon(grid) {
-  //all squares that arent bombs are revealed
-}
-
 function bfs(grid, x, y) {
   const queue = [];
 
   queue.push([x, y]);
 
-  while (queue.length > 0 && loop > 0) {
+  // while (queue.length > 0 && loop > 0) {
+  while (queue.length > 0) {
     for (let dir of directions) {
       let r = queue[0][0] + dir[0];
       let c = queue[0][1] + dir[1];
@@ -235,6 +239,6 @@ function bfs(grid, x, y) {
     // console.log(JSON.parse(JSON.stringify(queue)));
 
     //precaution for infinite loop - take out
-    loop = loop - 1;
+    // loop = loop - 1;
   }
 }

@@ -32,6 +32,13 @@ div#grid div.bomb {
     font-size: small;
 }
 
+div#grid div.win {
+    transition: 2s;
+    color: black;
+    background-color: rgb(211, 223, 48);
+    font-size: small;
+}
+
 div#grid div.flag {
     transition: 0s;
     background-color: green;

@@ -3,13 +3,14 @@ let gridSize = 15;
 let grid = [];
 let bombPosition = [];
 let bombs = [];
+let timeoutId;
 
 let startingBombs = 40;
 
 //limiter
 // let loop = 200;
 
-const testBombs = [
+let testBombs = [
   [1, 3],
   [2, 0],
   [1, 6],
@@ -56,9 +57,11 @@ const directions = [
 ];
 
 // cached element references
-let gridEl = document.getElementById("grid");
+const gridEl = document.getElementById("grid");
+const buttonEl = document.querySelector("button");
 
 function restart() {
+  bombs = [];
   grid = [];
   bombPosition = [];
   gridEl.classList.remove("disable");
@@ -84,48 +87,53 @@ function createGrid() {
     grid.push(row);
   }
   addBombs();
+  buttonEl.addEventListener("click", restart);
+  buttonEl.classList.add("hidden");
 }
 
 createGrid();
 
 function addBombs() {
-  // for (let i = 0; i < startingBombs; i++) {
-  //   let value = [...Array(2)].map(() => Math.floor(Math.random() * 15));
-  //   //accounts for duplicates
-  //   if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
-  //     i--;
-  //     continue;
-  //   }
-  //   console.log(value);
-  //   bombs.push(value);
-  // }
+  for (let i = 0; i < startingBombs; i++) {
+    let value = [...Array(2)].map(() => Math.floor(Math.random() * 15));
+    //accounts for duplicates
+    if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
+      i--;
+      continue;
+    }
+    // console.log(value);
+    bombs.push(value);
+  }
   // console.log(bombs);
 
-  // bombs.forEach((bomb) => {
-  //   square = grid[bomb[0]][bomb[1]];
-  //   square.innerHTML = "bomb";
-  //   square.isBomb = true;
-  //   square.classList.add("bomb");
-  // });
-
-  testBombs.forEach((bomb) => {
+  bombs.forEach((bomb) => {
     square = grid[bomb[0]][bomb[1]];
     // square.innerHTML = "bomb";
     square.isBomb = true;
     // square.classList.add("bomb");
   });
+
+  // testBombs.forEach((bomb) => {
+  //   square = grid[bomb[0]][bomb[1]];
+  //   // square.innerHTML = "bomb";
+  //   square.isBomb = true;
+  //   // square.classList.add("bomb");
+  // });
 }
 
 function revealAllBombs() {
   // bombs.forEach((bombs) => {
   // testBombs.forEach((bomb) => {
-  testBombs.forEach(function (bomb, index) {
+  bombs.forEach(function (bomb, index) {
     setTimeout(function () {
       let bombSquare = grid[bomb[0]][bomb[1]];
       bombSquare.innerHTML = "bomb";
       bombSquare.classList.add("bomb");
-    }, 75 * (index + 0));
+    }, 15 * (index + 0));
   });
+  setTimeout(function () {
+    buttonEl.classList.remove("hidden");
+  }, 2000);
 }
 
 function disableClick() {

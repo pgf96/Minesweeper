@@ -203,10 +203,8 @@ function adjacentBombsCount(sq) {
 
   if (bombCount > 0) {
     sq.innerHTML = bombCount;
-    sq.style.backgroundColor = "green";
-    // sq.classList.add(bombCount);
-  } else if (bombCount == 0) {
-    // sq.style.backgroundColor = "yellow";
+    sq.classList.add(`_${bombCount}`);
+  } else {
     sq.classList.add(`_${bombCount}`);
   }
   return bombCount;

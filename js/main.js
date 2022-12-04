@@ -59,6 +59,7 @@ const directions = [
 // cached element references
 const gridEl = document.getElementById("grid");
 const buttonEl = document.querySelector("button");
+const remainingBombs = document.getElementById("remainingBombs");
 
 function restart() {
   bombs = [];
@@ -78,9 +79,11 @@ function createGrid() {
       let sqEl = document.createElement("div");
       sqEl.position = [i, j];
       sqEl.isBomb = false;
+      sqEl.flagStatus = false;
       sqEl.bombCount = "";
       sqEl.revealed = false;
       sqEl.addEventListener("click", squareClicked);
+      sqEl.addEventListener("contextmenu", flag);
       gridEl.append(sqEl);
       row.push(sqEl);
     }
@@ -89,6 +92,7 @@ function createGrid() {
   addBombs();
   buttonEl.addEventListener("click", restart);
   buttonEl.classList.add("hidden");
+  remainingBombs.innerHTML = `Remaining Bombs: ${startingBombs}`;
 }
 
 createGrid();
@@ -108,6 +112,7 @@ function addBombs() {
 
   bombs.forEach((bomb) => {
     square = grid[bomb[0]][bomb[1]];
+    // square.classList.add("bomb");
     square.isBomb = true;
   });
 
@@ -179,6 +184,24 @@ function checkWin() {
         (square.isBomb === true && square.revealed === false)
     )
   );
+}
+
+function flag(e) {
+  e.preventDefault();
+  let square = this;
+  let x = square.position[0];
+  let y = square.position[1];
+  if (square.revealed == true) {
+    return;
+  }
+
+  if (square.flagStatus == true) {
+    grid[x][y].flagStatus = false;
+    grid[x][y].classList.remove("flag");
+  } else if (square.flagStatus == false) {
+    grid[x][y].flagStatus = true;
+    grid[x][y].classList.add("flag");
+  }
 }
 
 function adjacentBombsCount(sq) {

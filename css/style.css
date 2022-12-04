@@ -26,14 +26,19 @@ body {
 }
 
 div#grid div.bomb {
-    transition: 1.5s;
+    transition: 3s;
     color: black;
     background-color: red;
     font-size: small;
 
 }
 
+
 div#grid.disable {
     pointer-events: none;
+}
+
+button.hidden {
+    visibility: hidden;
 }
 

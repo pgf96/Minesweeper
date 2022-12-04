@@ -5,8 +5,9 @@ let bombPosition = [];
 let bombs = [];
 let timeoutId;
 
-let startingBombs = 40;
+let startingBombs = 5;
 let remainingBombs = startingBombs;
+let win;
 
 //limiter
 // let loop = 200;
@@ -134,9 +135,10 @@ function revealAllBombs() {
     setTimeout(function () {
       let bombSquare = grid[bomb[0]][bomb[1]];
       bombSquare.innerHTML = "bomb";
-      if (bombSquare.classList.replace("flag", "bomb") == false) {
-        bombSquare.classList.add("bomb");
-      }
+      if (win == true) {
+        bombSquare.classList.replace("flag", "win");
+        bombSquare.classList.add("win");
+      } else bombSquare.classList.add("bomb");
     }, 15 * (index + 0));
   });
   setTimeout(function () {
@@ -176,6 +178,8 @@ function squareClicked() {
   }
   console.log(checkWin());
   if (checkWin() == true) {
+    win = true;
+    revealAllBombs();
     disableClick();
     console.log("you win");
   }

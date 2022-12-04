@@ -30,7 +30,11 @@ div#grid div.bomb {
     color: black;
     background-color: rgb(225, 54, 54);
     font-size: small;
+}
 
+div#grid div.flag {
+    transition: 0s;
+    background-color: green;
 }
 
 div#grid div._0 {
@@ -39,7 +43,7 @@ div#grid div._0 {
 }
 
 div#grid div._1 {
-    background-color: rgb(91, 153, 204);
+    background-color: rgb(178, 216, 246);
 
 }
 
@@ -54,8 +58,16 @@ div#grid div._3 {
 }
 
 div#grid div._4 {
-    background-color: rgb(64, 106, 184);
+    background-color: rgb(98, 142, 225);
 
+}
+
+div#grid div._5 {
+    background-color: rgb(185, 58, 58);
+}
+
+div#grid div._6 {
+    background-color: rgb(185, 58, 58);
 }
 
 

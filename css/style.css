@@ -21,17 +21,23 @@ body {
     width: 37.8px;
     height: 37.5px;
     border: 1px solid white;
-    background-color: rgb(185, 185, 210);
+    background-color: rgb(167, 167, 181);
     justify-content: center;
 }
 
 div#grid div.bomb {
-    transition: 3s;
+    transition: 2s;
     color: black;
-    background-color: red;
+    background-color: rgb(225, 54, 54);
     font-size: small;
 
 }
+
+div#grid div.zero {
+    background-color: rgb(235, 235, 235);
+
+}
+
 
 
 div#grid.disable {
@@ -41,4 +47,6 @@ div#grid.disable {
 button.hidden {
     visibility: hidden;
 }
+
+
 

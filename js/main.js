@@ -108,9 +108,7 @@ function addBombs() {
 
   bombs.forEach((bomb) => {
     square = grid[bomb[0]][bomb[1]];
-    // square.innerHTML = "bomb";
     square.isBomb = true;
-    // square.classList.add("bomb");
   });
 
   // testBombs.forEach((bomb) => {
@@ -199,15 +197,17 @@ function adjacentBombsCount(sq) {
   }
 
   // JSON.stringify(console.log(`bombcount: ${bombCount}`));
-  sq.innerHTML = bombCount;
+
   sq.bombCount = bombCount;
   sq.revealed = true;
 
   if (bombCount > 0) {
+    sq.innerHTML = bombCount;
     sq.style.backgroundColor = "green";
-    console.log(bombCount);
+    // sq.classList.add(bombCount);
   } else if (bombCount == 0) {
-    sq.style.backgroundColor = "yellow";
+    // sq.style.backgroundColor = "yellow";
+    sq.classList.add(`_${bombCount}`);
   }
   return bombCount;
 }

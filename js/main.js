@@ -6,6 +6,7 @@ let bombs = [];
 let timeoutId;
 
 let startingBombs = 40;
+let remainingBombs = startingBombs;
 
 //limiter
 // let loop = 200;
@@ -59,7 +60,9 @@ const directions = [
 // cached element references
 const gridEl = document.getElementById("grid");
 const buttonEl = document.querySelector("button");
-const remainingBombs = document.getElementById("remainingBombs");
+const remainingBombsEl = document.getElementById("remainingBombs");
+
+//functions
 
 function restart() {
   bombs = [];
@@ -92,7 +95,7 @@ function createGrid() {
   addBombs();
   buttonEl.addEventListener("click", restart);
   buttonEl.classList.add("hidden");
-  remainingBombs.innerHTML = `Remaining Bombs: ${startingBombs}`;
+  remainingBombsEl.innerHTML = `Remaining Bombs: ${startingBombs}`;
 }
 
 createGrid();
@@ -131,7 +134,9 @@ function revealAllBombs() {
     setTimeout(function () {
       let bombSquare = grid[bomb[0]][bomb[1]];
       bombSquare.innerHTML = "bomb";
-      bombSquare.classList.add("bomb");
+      if (bombSquare.classList.replace("flag", "bomb") == false) {
+        bombSquare.classList.add("bomb");
+      }
     }, 15 * (index + 0));
   });
   setTimeout(function () {
@@ -198,9 +203,13 @@ function flag(e) {
   if (square.flagStatus == true) {
     grid[x][y].flagStatus = false;
     grid[x][y].classList.remove("flag");
+    remainingBombs += 1;
+    remainingBombsEl.innerHTML = `Remaining Bombs: ${remainingBombs}`;
   } else if (square.flagStatus == false) {
     grid[x][y].flagStatus = true;
     grid[x][y].classList.add("flag");
+    remainingBombs -= 1;
+    remainingBombsEl.innerHTML = `Remaining Bombs: ${remainingBombs}`;
   }
 }
 

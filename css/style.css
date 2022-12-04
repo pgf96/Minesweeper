@@ -33,8 +33,28 @@ div#grid div.bomb {
 
 }
 
-div#grid div.zero {
+div#grid div._0 {
     background-color: rgb(235, 235, 235);
+
+}
+
+div#grid div._1 {
+    background-color: rgb(91, 153, 204);
+
+}
+
+div#grid div._2 {
+    background-color: rgb(160, 201, 135);
+
+}
+
+div#grid div._3 {
+    background-color: rgb(230, 171, 171);
+
+}
+
+div#grid div._4 {
+    background-color: rgb(64, 106, 184);
 
 }
 

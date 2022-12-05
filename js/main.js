@@ -1,12 +1,28 @@
 //gridsize == # of mines
-let gridSize = 15;
+// easy- 10
+//hard = 21
+// let gridSize = 16;
+let gridSize = {
+  easy: 10,
+  medium: 16,
+  hard: 21,
+};
 let grid = [];
 let bombPosition = [];
 let bombs = [];
-let timeoutId;
+let difficulty = "medium";
 
-let startingBombs = 5;
-let remainingBombs = startingBombs;
+/*
+easy - 10
+medium - 40
+hard - 80
+*/
+let startingBombs = {
+  easy: 10,
+  medium: 40,
+  hard: 80,
+};
+let remainingBombs = startingBombs[difficulty];
 let win;
 
 //limiter
@@ -62,13 +78,23 @@ const directions = [
 const gridEl = document.getElementById("grid");
 const buttonEl = document.querySelector("button");
 const remainingBombsEl = document.getElementById("remainingBombs");
+const allButtonsEl = document.querySelectorAll("button");
+const difficultyButtonEl = document.querySelectorAll(
+  ".button-container button"
+);
+const buttonEasyEl = document.getElementById("easy");
+const buttonMediumEl = document.getElementById("medium");
+const buttonHardEl = document.getElementById("hard");
 
 //functions
 
+createGrid();
 function restart() {
+  win = undefined;
   bombs = [];
   grid = [];
   bombPosition = [];
+  remainingBombs = startingBombs[difficulty];
   gridEl.classList.remove("disable");
   while (gridEl.firstChild) {
     gridEl.removeChild(gridEl.firstChild);
@@ -77,9 +103,9 @@ function restart() {
 }
 
 function createGrid() {
-  for (let i = 0; i < gridSize; i++) {
+  for (let i = 0; i < gridSize[difficulty]; i++) {
     let row = [];
-    for (let j = 0; j < gridSize; j++) {
+    for (let j = 0; j < gridSize[difficulty]; j++) {
       let sqEl = document.createElement("div");
       sqEl.position = [i, j];
       sqEl.isBomb = false;
@@ -88,22 +114,22 @@ function createGrid() {
       sqEl.revealed = false;
       sqEl.addEventListener("click", squareClicked);
       sqEl.addEventListener("contextmenu", flag);
+      adjustSquareSize(sqEl);
       gridEl.append(sqEl);
       row.push(sqEl);
     }
     grid.push(row);
   }
   addBombs();
-  buttonEl.addEventListener("click", restart);
-  buttonEl.classList.add("hidden");
-  remainingBombsEl.innerHTML = `Remaining Bombs: ${startingBombs}`;
+  addButtons();
+  remainingBombsEl.innerHTML = `Remaining Bombs: ${startingBombs[difficulty]}`;
 }
 
-createGrid();
-
 function addBombs() {
-  for (let i = 0; i < startingBombs; i++) {
-    let value = [...Array(2)].map(() => Math.floor(Math.random() * 15));
+  for (let i = 0; i < startingBombs[difficulty]; i++) {
+    let value = [...Array(2)].map(() =>
+      Math.floor(Math.random() * gridSize[difficulty])
+    );
     //accounts for duplicates
     if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
       i--;
@@ -128,22 +154,57 @@ function addBombs() {
   // });
 }
 
+function addButtons() {
+  buttonEl.addEventListener("click", restart);
+  buttonEl.classList.add("hidden");
+  allButtonsEl.forEach((button) => button.classList.add("hidden"));
+  difficultyButtonEl.forEach((button) =>
+    button.addEventListener("click", changeDifficulty)
+  );
+  buttonEl.addEventListener("click", restart);
+}
+
+function changeDifficulty() {
+  difficulty = this.id.toString();
+  restart();
+}
+
+function adjustSquareSize(element) {
+  if (difficulty == "easy") {
+    element.classList.remove("medium");
+    element.classList.remove("hard");
+    element.classList.add("easy");
+  } else if (difficulty == "medium") {
+    element.classList.remove("easy");
+    element.classList.remove("hard");
+    element.classList.add("medium");
+  } else if (difficulty == "hard") {
+    element.classList.remove("easy");
+    element.classList.remove("medium");
+    element.classList.add("hard");
+  }
+}
+
 function revealAllBombs() {
   // bombs.forEach((bombs) => {
   // testBombs.forEach((bomb) => {
   bombs.forEach(function (bomb, index) {
+    let timeOutCoeff = difficulty == "hard" ? 14 : 35;
     setTimeout(function () {
       let bombSquare = grid[bomb[0]][bomb[1]];
-      bombSquare.innerHTML = "bomb";
+      bombSquare.innerHTML = "💣";
       if (win == true) {
         bombSquare.classList.replace("flag", "win");
         bombSquare.classList.add("win");
-      } else bombSquare.classList.add("bomb");
-    }, 15 * (index + 0));
+      } else {
+        bombSquare.classList.replace("flag", "bomb");
+        bombSquare.classList.add("bomb");
+      }
+    }, timeOutCoeff * (index + 0));
   });
   setTimeout(function () {
-    buttonEl.classList.remove("hidden");
-  }, 2000);
+    allButtonsEl.forEach((button) => button.classList.remove("hidden"));
+  }, 2800);
 }
 
 function disableClick() {
@@ -226,7 +287,12 @@ function adjacentBombsCount(sq) {
   for (let dir of directions) {
     let r = x + dir[0];
     let c = y + dir[1];
-    if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) {
+    if (
+      r < 0 ||
+      r >= gridSize[difficulty] ||
+      c < 0 ||
+      c >= gridSize[difficulty]
+    ) {
       continue;
     }
     if (grid[r][c].isBomb) bombCount = bombCount + 1;
@@ -258,9 +324,9 @@ function bfs(grid, x, y) {
       let c = queue[0][1] + dir[1];
       if (
         r < 0 ||
-        r >= gridSize ||
+        r >= gridSize[difficulty] ||
         c < 0 ||
-        c >= gridSize ||
+        c >= gridSize[difficulty] ||
         grid[r][c].isBomb ||
         grid[r][c].revealed ||
         adjacentBombsCount(grid[r][c]) > 0

@@ -7,8 +7,8 @@ body {
   }
 
 #grid {
-    width: 600px;
-    height: 600px;
+    width: 580px;
+    height: 580px;
     border: 6px solid rgba(112, 179, 194, 0.447);
     justify-content: center;
     align-items: center;
@@ -17,14 +17,35 @@ body {
     flex-wrap: wrap;
 }
 
-div {
+#grid div {
     display: flex; 
     align-items: center;
 }
 
+
+/* EASY */
+#grid div.easy {
+    width: 56px;
+    height: 56px;
+    border: 1px solid white;
+    background-color: rgb(167, 167, 181);
+    justify-content: center;
+}
+
+/* INT */
 #grid div {
-    width: 37.8px;
-    height: 37.5px;
+    width: 34.1px;
+    height: 33.5px;
+    border: 1px solid white;
+    background-color: rgb(167, 167, 181);
+    justify-content: center;
+}
+
+
+/* HARD */
+#grid div.hard {
+    width: 25.5px;
+    height: 25.5px;
     border: 1px solid white;
     background-color: rgb(167, 167, 181);
     justify-content: center;
@@ -90,6 +111,21 @@ div#grid.disable {
 
 button.hidden {
     visibility: hidden;
+}
+
+
+div.button-container {
+    text-align: center;
+}
+
+button.difficulty {
+    margin-top: 10px;
+    display: inline-flex;
+    justify-content: center;
+    text-align: center;
+    align-items: left;
+    height: 30px;
+    width: 90px;
 }
 
 

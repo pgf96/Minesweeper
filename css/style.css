@@ -132,4 +132,15 @@ div.button-container {
     margin: 10px 0px 
 }
 
+#win {
+    color: green;
+}
+
+.hide {
+    display: none;
+}
+
+#lose {
+    color: red;
+}
 

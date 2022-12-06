@@ -1,7 +1,3 @@
-//gridsize == # of mines
-// easy- 10
-//hard = 21
-// let gridSize = 16;
 let gridSize = {
   easy: 10,
   medium: 16,
@@ -10,13 +6,8 @@ let gridSize = {
 let grid = [];
 let bombPosition = [];
 let bombs = [];
-let difficulty = "medium";
-
-/*
-easy - 10
-medium - 40
-hard - 80
-*/
+let defaultDifficulty = "easy";
+let difficulty = defaultDifficulty;
 let startingBombs = {
   easy: 10,
   medium: 40,
@@ -24,45 +15,6 @@ let startingBombs = {
 };
 let remainingBombs = startingBombs[difficulty];
 let win;
-
-//limiter
-// let loop = 200;
-
-let testBombs = [
-  [1, 3],
-  [2, 0],
-  [1, 6],
-  [1, 10],
-  [3, 1],
-  [9, 10],
-  [4, 10],
-  [8, 10],
-  [0, 2],
-  [8, 1],
-  [6, 1],
-  [6, 12],
-  [8, 5],
-  [8, 6],
-  [10, 7],
-  [8, 9],
-  [8, 13],
-  [13, 5],
-  [13, 12],
-  [3, 5],
-  [13, 6],
-  [13, 7],
-  [2, 9],
-  [2, 13],
-  [13, 13],
-  [13, 1],
-  [3, 4],
-  [13, 4],
-  [13, 2],
-  [12, 1],
-  [7, 5],
-  [13, 7],
-];
-
 const directions = [
   [-1, -1],
   [-1, 0],
@@ -87,20 +39,7 @@ const buttonMediumEl = document.getElementById("medium");
 const buttonHardEl = document.getElementById("hard");
 
 //functions
-
 createGrid();
-function restart() {
-  win = undefined;
-  bombs = [];
-  grid = [];
-  bombPosition = [];
-  remainingBombs = startingBombs[difficulty];
-  gridEl.classList.remove("disable");
-  while (gridEl.firstChild) {
-    gridEl.removeChild(gridEl.firstChild);
-  }
-  createGrid();
-}
 
 function createGrid() {
   for (let i = 0; i < gridSize[difficulty]; i++) {
@@ -135,23 +74,12 @@ function addBombs() {
       i--;
       continue;
     }
-    // console.log(value);
     bombs.push(value);
   }
-  // console.log(bombs);
-
   bombs.forEach((bomb) => {
     square = grid[bomb[0]][bomb[1]];
-    // square.classList.add("bomb");
     square.isBomb = true;
   });
-
-  // testBombs.forEach((bomb) => {
-  //   square = grid[bomb[0]][bomb[1]];
-  //   // square.innerHTML = "bomb";
-  //   square.isBomb = true;
-  //   // square.classList.add("bomb");
-  // });
 }
 
 function addButtons() {
@@ -186,8 +114,6 @@ function adjustSquareSize(element) {
 }
 
 function revealAllBombs() {
-  // bombs.forEach((bombs) => {
-  // testBombs.forEach((bomb) => {
   bombs.forEach(function (bomb, index) {
     let timeOutCoeff = difficulty == "hard" ? 14 : 35;
     setTimeout(function () {
@@ -207,16 +133,19 @@ function revealAllBombs() {
   }, 2800);
 }
 
-function disableClick() {
-  gridEl.classList.add("disable");
-}
-
-function tempEnableClick() {
+function restart() {
+  win = undefined;
+  bombs = [];
+  grid = [];
+  bombPosition = [];
+  remainingBombs = startingBombs[difficulty];
   gridEl.classList.remove("disable");
+  while (gridEl.firstChild) {
+    gridEl.removeChild(gridEl.firstChild);
+  }
+  createGrid();
 }
-
 function squareClicked() {
-  //or event.targetSelector
   // square is the element clicked
   let square = this;
   // console.log(square.position);
@@ -244,6 +173,10 @@ function squareClicked() {
     disableClick();
     console.log("you win");
   }
+}
+
+function disableClick() {
+  gridEl.classList.add("disable");
 }
 
 function checkWin() {
@@ -279,10 +212,8 @@ function flag(e) {
 }
 
 function adjacentBombsCount(sq) {
-  // JSON.stringify(console.log(`square: ${sq}`));
   let x = sq.position[0];
   let y = sq.position[1];
-  // JSON.stringify(console.log(`here is: ${[x, y]}`));
   let bombCount = 0;
   for (let dir of directions) {
     let r = x + dir[0];
@@ -298,11 +229,8 @@ function adjacentBombsCount(sq) {
     if (grid[r][c].isBomb) bombCount = bombCount + 1;
   }
 
-  // JSON.stringify(console.log(`bombcount: ${bombCount}`));
-
   sq.bombCount = bombCount;
   sq.revealed = true;
-
   if (bombCount > 0) {
     sq.innerHTML = bombCount;
     sq.classList.add(`_${bombCount}`);
@@ -314,7 +242,6 @@ function adjacentBombsCount(sq) {
 
 function bfs(grid, x, y) {
   const queue = [];
-
   queue.push([x, y]);
 
   // while (queue.length > 0 && loop > 0) {
@@ -331,22 +258,13 @@ function bfs(grid, x, y) {
         grid[r][c].revealed ||
         adjacentBombsCount(grid[r][c]) > 0
       ) {
-        // console.log(JSON.parse(JSON.stringify([r, c])));
         // console.log("out of bounds, revealed already, has adjacent bombs, or bomb");
         continue;
       }
-
-      // if (adjacentBombsCount(grid[r][c]) > 0) continue;
-
       queue.push(grid[r][c].position);
       // console.log("here is new queue");
       // console.log(JSON.parse(JSON.stringify(queue)));
     }
     queue.shift();
-    // console.log("shift");
-    // console.log(JSON.parse(JSON.stringify(queue)));
-
-    //precaution for infinite loop - take out
-    // loop = loop - 1;
   }
 }

@@ -8,8 +8,6 @@ body {
 
 
   h1 { 
-    font-family: fantasy;
-    letter-spacing: 5px;
     font-size: 30px;
   }
 
@@ -22,7 +20,7 @@ body {
 #grid {
     max-width: 36.25rem;
     /* max-width: 70%; */
-    max-height: 36.25rem;
+    /* max-height: 36.25rem; */
     /* max-height: 70%; */
     border: 0.375rem solid rgba(112, 179, 194, 0.447);
     justify-content: center;
@@ -48,6 +46,8 @@ body {
     justify-content: center;
 }
 
+
+
 /* INT */
 #grid div.medium {
     width: 2.131rem;
@@ -61,10 +61,20 @@ body {
 /* HARD */
 #grid div.hard {
     width: 1.594rem;
-    height: 1.594rem;
+    height: 1.594rem;   
     border: 0.063rem  solid white;
     background-color: rgb(167, 167, 181);
     justify-content: center;
+}
+
+@media (max-width: 606px) {
+    #grid div.easy {
+        width: 55px;
+        height: 56px;
+        border: 0.055rem solid rgb(148, 38, 38);
+        background-color: rgb(167, 167, 181);
+        justify-content: center;
+    }
 }
 
 div#grid div.bomb {
@@ -80,6 +90,8 @@ div#grid div.win {
     background-color: rgb(211, 223, 48);
     font-size: small;
 }
+
+
 
 div#grid div.flag {
     transition: 0s;
@@ -132,6 +144,7 @@ button.hidden {
 
 div.button-container {
     text-align: center;
+    margin: 10px 0px 
 }
 
 /* button.difficulty {

@@ -1,5 +1,5 @@
 body {
-    font-family: "Lucida Grande";
+    font-family: "Arial";
     text-align: center;
     box-sizing: border-box;
     background: rgb(205,167,217);
@@ -18,10 +18,7 @@ body {
 }
 
 #grid {
-    max-width: 36.25rem;
-    /* max-width: 70%; */
-    /* max-height: 36.25rem; */
-    /* max-height: 70%; */
+    max-width: 36.3rem;
     border: 0.375rem solid rgba(112, 179, 194, 0.447);
     justify-content: center;
     align-items: center;
@@ -37,8 +34,6 @@ body {
 
 /* EASY */
 #grid div.easy {
-    /* width: 56px;  */
-    /* height: 56px; */
     width: 3.5rem;
     height: 3.5rem;
     border: 0.063rem solid white;
@@ -65,16 +60,6 @@ body {
     border: 0.063rem  solid white;
     background-color: rgb(167, 167, 181);
     justify-content: center;
-}
-
-@media (max-width: 606px) {
-    #grid div.easy {
-        width: 55px;
-        height: 56px;
-        border: 0.055rem solid rgb(148, 38, 38);
-        background-color: rgb(167, 167, 181);
-        justify-content: center;
-    }
 }
 
 div#grid div.bomb {
@@ -146,16 +131,5 @@ div.button-container {
     text-align: center;
     margin: 10px 0px 
 }
-
-/* button.difficulty {
-    margin-top: 0.625rem;
-    display: inline-flex;
-    justify-content: center;
-    text-align: center;
-    align-items: left;
-    height: 1.875rem;
-    width: 5.625rem;
-} */
-
 
 

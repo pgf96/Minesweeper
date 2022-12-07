@@ -1,4 +1,4 @@
-Minesweeper
+Minesweeper return
 -A logic-based game where you try to reveal the safe squares while avoiding randomly placed mines.
 
 ☐ Screenshot(s): Images of your actual game

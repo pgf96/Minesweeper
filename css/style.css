@@ -2,14 +2,20 @@ body {
     font-family: "Arial";
     text-align: center;
     box-sizing: border-box;
-    background: rgb(205,167,217);
-    background: linear-gradient(90deg, rgba(205,167,217,1) 16%, rgba(194,245,255,1) 100%);
-  }
+    background: rgb(205, 167, 217);
+    background: linear-gradient(90deg, rgba(205, 167, 217, 1) 16%, rgba(194, 245, 255, 1) 100%);
+}
 
+h1 {
+    font-size: 40px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
 
-  h1 { 
+h3 {
+    margin: 15px 0px 10px;
     font-size: 30px;
-  }
+}
 
 #container {
     align-items: center;
@@ -27,12 +33,10 @@ body {
 }
 
 #grid div {
-    display: flex; 
+    display: flex;
     align-items: center;
 }
 
-
-/* EASY */
 #grid div.easy {
     width: 3.5rem;
     height: 3.5rem;
@@ -41,9 +45,6 @@ body {
     justify-content: center;
 }
 
-
-
-/* INT */
 #grid div.medium {
     width: 2.131rem;
     height: 2.094rem;
@@ -52,12 +53,10 @@ body {
     justify-content: center;
 }
 
-
-/* HARD */
 #grid div.hard {
     width: 1.594rem;
-    height: 1.594rem;   
-    border: 0.063rem  solid white;
+    height: 1.594rem;
+    border: 0.063rem solid white;
     background-color: rgb(167, 167, 181);
     justify-content: center;
 }
@@ -75,8 +74,6 @@ div#grid div.win {
     background-color: rgb(211, 223, 48);
     font-size: small;
 }
-
-
 
 div#grid div.flag {
     transition: 0s;
@@ -116,8 +113,6 @@ div#grid div._6 {
     background-color: rgb(183, 108, 226);
 }
 
-
-
 div#grid.disable {
     pointer-events: none;
 }
@@ -126,10 +121,9 @@ button.hidden {
     visibility: hidden;
 }
 
-
-div.button-container {
+div.button-cont {
     text-align: center;
-    margin: 10px 0px 
+    margin: 10px 0px
 }
 
 #win {
@@ -143,4 +137,3 @@ div.button-container {
 #lose {
     color: red;
 }
-

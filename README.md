@@ -2,8 +2,8 @@ Minesweeper
 -A logic-based game where you try to reveal the safe squares while avoiding randomly placed mines.
 
 ☐ Screenshot(s): Images of your actual game
-![](images.easy.jpg)
-![](images.hard.jpg)
+![](/images/easy.jpg)
+![](/images/hard.jpg)
 
 ☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
 

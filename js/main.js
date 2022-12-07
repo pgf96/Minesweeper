@@ -19,7 +19,6 @@ const defaultDifficulty = "easy"
 
 let grid = []
 let bombs = []
-let win
 
 let difficulty = defaultDifficulty
 let remainingBombs = startingBombs[difficulty]
@@ -35,13 +34,12 @@ const buttonEl = document.querySelector("button")
 const remainingBombsEl = document.getElementById("remainingBombs")
 const winEl = document.getElementById("win")
 const lossEl = document.getElementById("lose")
+//change naming
 const allButtonsEl = document.querySelectorAll("button")
 const difficultyButtonEl = document.querySelectorAll(".button-cont button")
 const buttonEasyEl = document.getElementById("easy")
 const buttonMediumEl = document.getElementById("medium")
 const buttonHardEl = document.getElementById("hard")
-
-//functions
 
 function createGrid() {
   for (let i = 0; i < gridSize[difficulty]; i++) {
@@ -75,7 +73,6 @@ function renderBombs() {
     let value = [...Array(2)].map(() =>
       Math.floor(Math.random() * gridSize[difficulty])
     )
-    //accounts for duplicates
     if (JSON.stringify(bombs).includes(JSON.stringify(value))) {
       i--
       continue
@@ -125,7 +122,7 @@ function revealAllBombs() {
     setTimeout(function () {
       let bombSquare = grid[bomb[0]][bomb[1]]
       bombSquare.innerHTML = "💣"
-      if (win == true) {
+      if (checkWin() == true) {
         bombSquare.classList.replace("flag", "win")
         bombSquare.classList.add("win")
       } else {
@@ -140,7 +137,6 @@ function revealAllBombs() {
 }
 
 function restart() {
-  win = undefined
   bombs = []
   grid = []
   bombPosition = []
@@ -153,7 +149,6 @@ function restart() {
 }
 function squareClicked() {
   let square = this
-  // x,y coordinate of square clicked
   let x = square.position[0]
   let y = square.position[1]
 
@@ -162,7 +157,7 @@ function squareClicked() {
     lossEl.classList.remove("hide")
     remainingBombsEl.classList.add("hide")
     disableClick()
-  } else if (square.revealed == false || square.bombCount == "") {
+  } else if (square.revealed == false) {
     adjacentBombsCount(square)
 
     if (square.bombCount == 0) {
@@ -170,7 +165,6 @@ function squareClicked() {
     }
   }
   if (checkWin() == true) {
-    win = true
     winEl.classList.remove("hide")
     remainingBombsEl.classList.add("hide")
     revealAllBombs()

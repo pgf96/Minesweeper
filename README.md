@@ -1,22 +1,25 @@
-# Title: Minesweeper   return
-logic-based game where the user tries to reveal the safe squares while avoiding randomly placed mines.   return
-   return
-By default, the game starts on easy mode. After the first game is completed, the user will be prompted to either try again or select a difficulty.   return
-easy   (10 x 10 | 10 bombs)   return
-medium (16 x 16 | 40 bombs)   return
-hard   (21 x 21 | 40 bombs)   return
+# Minesweeper 
+>  logic-based game where the user tries to reveal the safe squares while avoiding randomly placed mines.  
 
+## Description
+By default, the game starts on easy mode. After the first game is completed, the user will be prompted to either try again or select a difficulty. 
 
-☐ Screenshot(s): Images of your actual game
+easy   (10 x 10 | 10 bombs)   
+medium (16 x 16 | 40 bombs)  
+hard   (21 x 21 | 40 bombs)   
+
 ![](/images/easy.jpg)
 ![](/images/hard.jpg)
 
-☐ Technologies Used: List of the technologies used, e.g., JavaScript, HTML, CSS...
+## Built with
+JavaScripts, HTML, css
 
-☐ Getting Started: In this section include the link to your deployed game and any instructions you deem important.
+## Getting Started
+Open the link in Google Chrome. [Minesweeper]([https://duckduckgo.com](https://pgf96.github.io/Minesweeper/)).
 
-☐ Next Steps: Planned future enhancements (icebox items).
+## Next Steps
+☐ add a custoomizable difficulty setting where the user can select the grid size and number of bombs
+☐ Create an AI in python to play minesweeper
+☐ Implement user profiles to save game data historry
 
-Note: Don't underestimate the value of a well crafted README.md. The README.md introduces your project to prospective employers and forms their first impression of your work!
 
-☐ Frequent commits dating back to the very beginning of the project. Never delete you repo to "start over". Commit messages should be in the present tense, e.g., "Style game board" instead of "Styled game board". Be sure to create the repo on your personal GitHub account and ensure that it is "public".

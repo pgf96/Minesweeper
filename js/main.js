@@ -32,11 +32,10 @@ let gridSize = {
 const gridEl = document.getElementById("grid")
 const buttonEl = document.querySelector("button")
 const remainingBombsEl = document.getElementById("remainingBombs")
-const winEl = document.getElementById("win")
-const lossEl = document.getElementById("lose")
-//change naming
-const allButtonsEl = document.querySelectorAll("button")
-const difficultyButtonEl = document.querySelectorAll(".button-cont button")
+const winMessage = document.getElementById("win")
+const lossMessage = document.getElementById("lose")
+const buttonsAllEl = document.querySelectorAll("button")
+const buttonDifficultyEl = document.querySelectorAll(".button-cont button")
 const buttonEasyEl = document.getElementById("easy")
 const buttonMediumEl = document.getElementById("medium")
 const buttonHardEl = document.getElementById("hard")
@@ -49,7 +48,7 @@ function createGrid() {
       sqEl.position = [i, j]
       sqEl.isBomb = false
       sqEl.flagStatus = false
-      // sqEl.bombCount = ""
+      sqEl.bombCount = -1
       sqEl.revealed = false
       sqEl.addEventListener("click", squareClicked)
       sqEl.addEventListener("contextmenu", flag)
@@ -61,8 +60,8 @@ function createGrid() {
   }
   renderBombs()
   renderButtons()
-  winEl.classList.add("hide")
-  lossEl.classList.add("hide")
+  winMessage.classList.add("hide")
+  lossMessage.classList.add("hide")
   remainingBombsEl.classList.remove("hide")
   remainingBombsEl.innerHTML = `Remaining Bombs: ${startingBombs[difficulty]}`
 }
@@ -88,8 +87,8 @@ function renderBombs() {
 function renderButtons() {
   buttonEl.addEventListener("click", restart)
   buttonEl.classList.add("hidden")
-  allButtonsEl.forEach((button) => button.classList.add("hidden"))
-  difficultyButtonEl.forEach((button) =>
+  buttonsAllEl.forEach((button) => button.classList.add("hidden"))
+  buttonDifficultyEl.forEach((button) =>
     button.addEventListener("click", changeDifficulty)
   )
   buttonEl.addEventListener("click", restart)
@@ -132,7 +131,7 @@ function revealAllBombs() {
     }, timeOutCoeff * (index + 0))
   })
   setTimeout(function () {
-    allButtonsEl.forEach((button) => button.classList.remove("hidden"))
+    buttonsAllEl.forEach((button) => button.classList.remove("hidden"))
   }, 2800)
 }
 
@@ -154,7 +153,7 @@ function squareClicked() {
 
   if (square.isBomb) {
     revealAllBombs()
-    lossEl.classList.remove("hide")
+    lossMessage.classList.remove("hide")
     remainingBombsEl.classList.add("hide")
     disableClick()
   } else if (square.revealed == false) {
@@ -165,7 +164,7 @@ function squareClicked() {
     }
   }
   if (checkWin() == true) {
-    winEl.classList.remove("hide")
+    winMessage.classList.remove("hide")
     remainingBombsEl.classList.add("hide")
     revealAllBombs()
     disableClick()
@@ -238,7 +237,6 @@ function adjacentBombsCount(sq) {
 }
 
 function bfs(grid, x, y) {
-  // create an array for square's position to be checked
   const queue = []
   queue.push([x, y])
   while (queue.length > 0) {
@@ -246,24 +244,18 @@ function bfs(grid, x, y) {
       let r = queue[0][0] + dir[0]
       let c = queue[0][1] + dir[1]
       if (
-        // check if position of square is out of bounds
         r < 0 ||
         r >= gridSize[difficulty] ||
         c < 0 ||
         c >= gridSize[difficulty] ||
-        // check if bomb or previously revealed
         grid[r][c].isBomb ||
         grid[r][c].revealed ||
-        // run func on the square and check if the squares bombCount property is > 0
-        // reveal square
         adjacentBombsCount(grid[r][c]) > 0
       ) {
         continue
       }
-      // if a square fails previous conditions then the resulting square's position will be added into the END of the queue
       queue.push(grid[r][c].position)
     }
-    // remove position in the beginning of the queue
     queue.shift()
   }
 }

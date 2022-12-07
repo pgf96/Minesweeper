@@ -1,5 +1,11 @@
-Minesweeper return
--A logic-based game where you try to reveal the safe squares while avoiding randomly placed mines.
+# Title: Minesweeper   return
+logic-based game where the user tries to reveal the safe squares while avoiding randomly placed mines.   return
+   return
+By default, the game starts on easy mode. After the first game is completed, the user will be prompted to either try again or select a difficulty.   return
+easy   (10 x 10 | 10 bombs)   return
+medium (16 x 16 | 40 bombs)   return
+hard   (21 x 21 | 40 bombs)   return
+
 
 ☐ Screenshot(s): Images of your actual game
 ![](/images/easy.jpg)

@@ -15,7 +15,7 @@ hard   (21 x 21 | 40 bombs)
 JavaScripts, HTML, css
 
 ## Getting Started
-Open the link in Google Chrome. [Minesweeper]([https://duckduckgo.com](https://pgf96.github.io/Minesweeper/)).
+Open the link in Google Chrome. ([Minesweeper](https://pgf96.github.io/Minesweeper/)).
 
 ## Next Steps
 ☐ add a custoomizable difficulty setting where the user can select the grid size and number of bombs

@@ -43,21 +43,21 @@ const buttonHardEl = document.getElementById("hard")
 
 function createGrid() {
   for (let i = 0; i < gridSize[difficulty]; i++) {
-    let row = []
+    let r = []
     for (let j = 0; j < gridSize[difficulty]; j++) {
       let sqEl = document.createElement("div")
       sqEl.position = [i, j]
       sqEl.isBomb = false
       sqEl.flagStatus = false
-      sqEl.bombCount = ""
+      // sqEl.bombCount = ""
       sqEl.revealed = false
       sqEl.addEventListener("click", squareClicked)
       sqEl.addEventListener("contextmenu", flag)
       adjustSquareSize(sqEl)
       gridEl.append(sqEl)
-      row.push(sqEl)
+      r.push(sqEl)
     }
-    grid.push(row)
+    grid.push(r)
   }
   renderBombs()
   renderButtons()
@@ -177,8 +177,8 @@ function disableClick() {
 }
 
 function checkWin() {
-  return grid.every((row) =>
-    row.every(
+  return grid.every((r) =>
+    r.every(
       (square) =>
         square.revealed === true ||
         (square.isBomb === true && square.revealed === false)

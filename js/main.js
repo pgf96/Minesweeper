@@ -1,7 +1,7 @@
 const startingBombs = {
   easy: 10,
   medium: 40,
-  hard: 80,
+  hard: 65,
 }
 
 const directions = [
@@ -26,7 +26,7 @@ let remainingBombs = startingBombs[difficulty]
 let gridSize = {
   easy: 10,
   medium: 16,
-  hard: 21,
+  hard: 18,
 }
 
 const gridEl = document.getElementById("grid")
@@ -259,3 +259,15 @@ function bfs(grid, x, y) {
     queue.shift()
   }
 }
+
+// const directions = [
+//   [-1, -1],
+//   [-1, 0],
+//   [-1, 1],
+//   [0, 1],
+//   [1, 1],
+//   [1, 0],
+//   [1, -1],
+//   [0, -1],
+// ]
+

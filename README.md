@@ -12,7 +12,8 @@ hard   (21 x 21 | 40 bombs)
 ![](/images/hard.jpg)
 
 ## Features
-Designed for both browser and mobile.
+* Designed for both browser and mobile  
+* Utilizes the **breadth-first search (BFS)** algorithm to compute the number of mines adjacent to each cell
 
 ## Built with
 JavaScripts, HTML, CSS

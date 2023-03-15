@@ -11,6 +11,9 @@ hard   (21 x 21 | 40 bombs)
 ![](/images/easy.jpg)
 ![](/images/hard.jpg)
 
+## Features
+Designed for both browser and mobile.
+
 ## Built with
 JavaScripts, HTML, CSS
 
@@ -18,10 +21,12 @@ JavaScripts, HTML, CSS
 Open the link in Google Chrome. ([Minesweeper](https://pgf96.github.io/Minesweeper/)).
 
 ## Next Steps
-☐ Customizable difficulty setting where the user can input the grid size and number of bombs
+- [x] Design for mobile
 
-☐ Create an AI in python to play minesweeper
+- [ ] Customizable difficulty setting where the user can input the grid size and number of bombs
 
-☐ Implement user profiles to save game data history
+- [ ] Create an AI in python to play minesweeper
+
+- [ ] Implement user profiles to save game data history
 
 
